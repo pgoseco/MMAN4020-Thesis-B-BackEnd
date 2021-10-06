@@ -14,14 +14,14 @@ class Person(models.Model):
 
 
 class Device(models.Model):
-    person = models.ForeignKey(Person, related_name='devices',
+    persons = models.ForeignKey(Person, related_name='devices',
                              null=True, on_delete=models.SET_NULL)
-    deviceId = models.CharField(max_length=32)
+    device_id = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.deviceId
+        return self.device_id
 
 
 class VitalSigns(models.Model):
