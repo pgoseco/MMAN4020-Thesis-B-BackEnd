@@ -1,6 +1,6 @@
 from django.db import models
 
-class Person(models.Model):
+class Patient(models.Model):
     name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=32)
     covid_positive = models.BooleanField(default=True)
@@ -14,7 +14,7 @@ class Person(models.Model):
 
 
 class Device(models.Model):
-    persons = models.ForeignKey(Person, related_name='devices',
+    patient = models.ForeignKey(Patient, related_name='devices',
                              null=True, on_delete=models.SET_NULL)
     device_id = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,4 +36,4 @@ class VitalSigns(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return self.covid_symptoms
+        return self.device

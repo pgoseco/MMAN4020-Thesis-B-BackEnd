@@ -3,13 +3,13 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
-from .models import Person, Device, VitalSigns
-from .serializers import DeviceTelemetryHistorySerializer, PersonSerializer, PersonListingField, DeviceSerializer, DeviceTelemetrySerializer, DeviceListingField, VitalSignsSerializer, VitalSignsListingField
+from .models import Patient, Device, VitalSigns
+from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, PatientListingField, DeviceSerializer, DeviceTelemetrySerializer, DeviceListingField, VitalSignsSerializer, VitalSignsListingField
 from .services import DeviceTelemetry
 
-class PersonViewSet(viewsets.ModelViewSet):
-    serializer_class = PersonSerializer
-    queryset = Person.objects.all()
+class PatientViewSet(viewsets.ModelViewSet):
+    serializer_class = PatientSerializer
+    queryset = Patient.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'last_name', 'covid_positive', 'height', 
                      'weight', 'created_at', 'updated_at',)
@@ -56,7 +56,7 @@ class DeviceViewSet(viewsets.ModelViewSet):
 
 class VitalSignsViewSet(viewsets.ModelViewSet):
     serializer_class = VitalSignsSerializer
-    queryset = Person.objects.all()
+    queryset = VitalSigns.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('covid_symptoms', 'body_temperature', 'pulse_rate', 'respiration_rate', 
                      'blood_pressure', 'created_at', 'updated_at',)

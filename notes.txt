@@ -1,0 +1,15 @@
+gcloud_project_name/ID='patient-be-thesis'
+sql_instance_id/name='covid-be-thesis'
+sql_pass='qNr0uGxGqwrD6kld'
+instance_connection_name='patient-be-thesis:us-central1:covid-be-thesis'
+db_name='patient_monitoring'
+sql_user_name='covid-be-thesis-user'
+service_account_name = 'patient-monitoring-thesis'
+service_account_id='patient-monitoring-thesis-509'
+
+service_url='https://patient-vitalsign-monitor-sxa5qjoqqa-uc.a.run.app'
+
+To revise deployment:
+
+1. 'gcloud builds submit --tag gcr.io/patient-be-thesis/patient_monitoring .'
+2. 'gcloud beta run deploy --image gcr.io/patient-be-thesis/patient_monitoring'  

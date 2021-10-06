@@ -3,21 +3,21 @@ from rest_framework.reverse import reverse
 from datetime import datetime, timedelta
 from django.utils import timezone
 
-from .models import Person, Device, VitalSigns
+from .models import Patient, Device, VitalSigns
 
-class PersonSerializer(serializers.Serializer):
+class PatientSerializer(serializers.Serializer):
 
     class Meta:
-        model = Person
+        model = Patient
         fields = '__all__'
 
-class PersonListingField(serializers.RelatedField):
+class PatientListingField(serializers.RelatedField):
     def to_representation(self, value):
         return value.id
 
 class DeviceSerializer(serializers.ModelSerializer):
 
-    persons = PersonListingField(many=True, read_only=True)
+    Patients = PatientListingField(many=True, read_only=True)
 
     class Meta:
         model = Device
@@ -41,6 +41,14 @@ class VitalSignsSerializer(serializers.ModelSerializer):
 class VitalSignsListingField(serializers.RelatedField):
     def to_representation(self, value):
         return value.id
+
+
+def week():
+    return datetime.now(tz=None) - timedelta(days=7)
+
+
+def now():
+    return datetime.now(tz=None)
 
 
 class DeviceTelemetrySerializer(serializers.Serializer):
