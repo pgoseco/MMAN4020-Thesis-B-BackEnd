@@ -7,6 +7,4 @@ router.register('patient', views.PatientViewSet)
 router.register('device', views.DeviceViewSet) # dont have to do a base_name because we have a queryset
 router.register('vitalsigns', views.VitalSignsViewSet)
 
-urlpatterns = [
-    path('', include(router.urls)),
-]
+urlpatterns = router.urls

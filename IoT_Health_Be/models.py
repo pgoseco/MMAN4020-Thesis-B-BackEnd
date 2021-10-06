@@ -12,7 +12,6 @@ class Patient(models.Model):
     def __str__(self):
         return self.name
 
-
 class Device(models.Model):
     patient = models.ForeignKey(Patient, related_name='devices',
                              null=True, on_delete=models.SET_NULL)
@@ -35,5 +34,5 @@ class VitalSigns(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return self.device
+    def __bool__(self):
+        return self.covid_symptoms

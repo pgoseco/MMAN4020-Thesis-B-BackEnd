@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from .models import Patient, Device, VitalSigns
-from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, PatientListingField, DeviceSerializer, DeviceTelemetrySerializer, DeviceListingField, VitalSignsSerializer, VitalSignsListingField
+from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, DeviceSerializer, DeviceTelemetrySerializer, VitalSignsSerializer
 from .services import DeviceTelemetry
 
 class PatientViewSet(viewsets.ModelViewSet):
