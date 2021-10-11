@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from rest_framework import viewsets, filters, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -6,6 +7,7 @@ from django.shortcuts import get_object_or_404
 from .models import Patient, Device, VitalSigns
 from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, DeviceSerializer, DeviceTelemetrySerializer, VitalSignsSerializer
 from .services import DeviceTelemetry
+from IoT_Health_Be import serializers
 
 class PatientViewSet(viewsets.ModelViewSet):
     serializer_class = PatientSerializer
@@ -13,6 +15,27 @@ class PatientViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'last_name', 'covid_positive', 'height', 
                      'weight', 'created_at', 'updated_at',)
+
+    def CreatePatient(self, request):
+
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            if request.method == 'POST':
+                name = request.POST['name']
+                last_name = request.POST['last_name']
+                covid_positive = request.POST['covid_positive']
+                height = request.POST['height']
+                weight = request.POST['weight']
+                created_at = request.POST['created_at']
+                updated_at = request.POST['updated_at']
+
+                patient = Patient.objects.create(name=name, last_name=last_name, covid_positive=covid_positive, height=height,weight=weight, created_at=created_at,updated_at=updated_at)
+                patient.save()
+        else:
+            return Response(
+                serializer.errors,
+                status = status.HTTP_400_BAD_REQUEST,
+            )
 
 class DeviceViewSet(viewsets.ModelViewSet):
     serializer_class = DeviceSerializer

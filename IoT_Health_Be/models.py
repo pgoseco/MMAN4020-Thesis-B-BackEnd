@@ -24,13 +24,15 @@ class Device(models.Model):
 
 
 class VitalSigns(models.Model):
+    
+    #CASCADE ALSO DELETES THE VITAL SIGNS ATTACHED TO THE DEVICE IF DEVICE GETS DELETED
     device = models.ForeignKey(Device, related_name='vitalsigns',
                              on_delete=models.CASCADE)
     covid_symptoms = models.BooleanField(default=True)
     body_temperature = models.FloatField()
     pulse_rate = models.FloatField()
     respiration_rate = models.FloatField()
-    blood_pressure = models.FloatField()
+    blood_pressure = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

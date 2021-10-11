@@ -16,9 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.http import HttpResponse
+
+def HomePage(request):
+    return HttpResponse('Welcome to the Patient Monitoring System Back-End. This project was created for MMAN4020 Thesis B.')
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('IoT_Health_Be.urls')),
+    path('', HomePage, name="welcome"),
 ]
 

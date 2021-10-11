@@ -5,19 +5,20 @@ from django.utils import timezone
 
 from .models import Patient, Device, VitalSigns
 
-class PatientSerializer(serializers.Serializer):
+class PatientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Patient
         fields = '__all__'
 
+    
 class PatientListingField(serializers.RelatedField):
     def to_representation(self, value):
         return value.id
 
 class DeviceSerializer(serializers.ModelSerializer):
 
-    Patients = PatientListingField(many=True, read_only=True)
+    #Patients = PatientListingField(many=True, read_only=True)
 
     class Meta:
         model = Device
@@ -31,7 +32,7 @@ class DeviceListingField(serializers.RelatedField):
 
 class VitalSignsSerializer(serializers.ModelSerializer):
 
-    device = DeviceListingField(many=True, read_only=True)
+    #device = DeviceListingField(many=True, read_only=True)
 
     class Meta:
         model = VitalSigns
