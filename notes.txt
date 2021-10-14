@@ -13,3 +13,20 @@ To revise deployment:
 
 1. 'gcloud builds submit --tag gcr.io/patient-be-thesis/patient_monitoring .'
 2. 'gcloud beta run deploy --image gcr.io/patient-be-thesis/patient_monitoring'  
+
+To use locally:
+1. Remember to unset DJANGO_PROD 
+
+To deploy to cloud:
+1. Remember to export DJANGO_PROD=True
+
+
+'''
+
+    def determine_covid_symptoms(self, obj):
+        if VitalSigns.objects.get(body_temperature=obj) >= 37:
+            if VitalSigns.objects.get(pulse_rate=obj) > 90:
+                if VitalSigns.objects.get(respiration_rate=obj) >= 23:
+                    if VitalSigns.objects.get(oxygen_saturation_level=obj) <= 92:
+                        VitalSigns.objects.filter(covid_s))  
+'''

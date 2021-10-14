@@ -25,7 +25,8 @@ SECRET_KEY = '(^ju)5ww91v4h^&nob5r(p1dy&ky=h6cfo1ok&00sf9%t&vzr9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*']
+
 
 
 # Application definition
@@ -38,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'simple_history',
     'IoT_Health_Be',
 ]
 
@@ -76,13 +78,30 @@ WSGI_APPLICATION = 'Thesis_Backend_Project.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+DB_CONNECTION_NAME = "patient-be-thesis:us-central1:covid-be-thesis"
+DB_USER = "covid-be-thesis-user"
+DB_PASS = "qNr0uGxGqwrD6kld"
+DB_NAME = "patient_monitoring"
 
+if os.getenv('DJANGO_PROD'):
+    print("Running in production...")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': f"/cloudsql/{DB_CONNECTION_NAME}",
+            'USER': f"{DB_USER}",
+            'PASSWORD': f"{DB_PASS}",
+            'NAME': f"{DB_NAME}",
+        }
+    }
+else:
+    print("Locally running...")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators

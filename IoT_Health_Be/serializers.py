@@ -2,6 +2,7 @@ from rest_framework import serializers
 from rest_framework.reverse import reverse
 from datetime import datetime, timedelta
 from django.utils import timezone
+from rest_framework.response import Response
 
 from .models import Patient, Device, VitalSigns
 
@@ -11,7 +12,7 @@ class PatientSerializer(serializers.ModelSerializer):
         model = Patient
         fields = '__all__'
 
-    
+
 class PatientListingField(serializers.RelatedField):
     def to_representation(self, value):
         return value.id
@@ -33,7 +34,7 @@ class DeviceListingField(serializers.RelatedField):
 class VitalSignsSerializer(serializers.ModelSerializer):
 
     #device = DeviceListingField(many=True, read_only=True)
-
+    
     class Meta:
         model = VitalSigns
         fields = '__all__'
@@ -56,6 +57,12 @@ class DeviceTelemetrySerializer(serializers.Serializer):
     device_id = serializers.CharField(required=True, max_length=32)
     distance = serializers.FloatField(required=True)
     battery = serializers.FloatField(required=False)
+
+class DeviceReadingsSerializer(serializers.Serializer):
+
+    class Meta:
+        model = VitalSigns
+        fields = '__all__'
 
 
 class DeviceTelemetryHistorySerializer(serializers.Serializer):

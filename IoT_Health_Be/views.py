@@ -5,7 +5,7 @@ from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
 
 from .models import Patient, Device, VitalSigns
-from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, DeviceSerializer, DeviceTelemetrySerializer, VitalSignsSerializer
+from .serializers import DeviceTelemetryHistorySerializer, PatientSerializer, DeviceSerializer, DeviceTelemetrySerializer, VitalSignsSerializer, DeviceReadingsSerializer
 from .services import DeviceTelemetry
 from IoT_Health_Be import serializers
 
@@ -15,23 +15,15 @@ class PatientViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'last_name', 'covid_positive', 'height', 
                      'weight', 'created_at', 'updated_at',)
-
+    
+    @action(detail=False, methods=['post'])
     def CreatePatient(self, request):
-
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            if request.method == 'POST':
-                name = request.POST['name']
-                last_name = request.POST['last_name']
-                covid_positive = request.POST['covid_positive']
-                height = request.POST['height']
-                weight = request.POST['weight']
-                created_at = request.POST['created_at']
-                updated_at = request.POST['updated_at']
-
-                patient = Patient.objects.create(name=name, last_name=last_name, covid_positive=covid_positive, height=height,weight=weight, created_at=created_at,updated_at=updated_at)
-                patient.save()
+            serializer.save()
+            return Response("Patient sucessfully added", status=status.HTTP_201_CREATED,)
         else:
+            print("NOT WORKING")
             return Response(
                 serializer.errors,
                 status = status.HTTP_400_BAD_REQUEST,
@@ -82,4 +74,17 @@ class VitalSignsViewSet(viewsets.ModelViewSet):
     queryset = VitalSigns.objects.all()
     filter_backends = (filters.SearchFilter,)
     search_fields = ('covid_symptoms', 'body_temperature', 'pulse_rate', 'respiration_rate', 
-                     'blood_pressure', 'created_at', 'updated_at',)
+                     'oxygen_saturation_level', 'created_at', 'updated_at',)
+
+    @action(detail=False, methods=['post'])
+    def Collect_Data(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response("Vital signs Recorded", status=status.HTTP_201_CREATED,)
+        else:
+            return Response(
+                serializer.errors,
+                status = status.HTTP_400_BAD_REQUEST,
+            )
+

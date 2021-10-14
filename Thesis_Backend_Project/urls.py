@@ -21,6 +21,7 @@ from django.http import HttpResponse
 def HomePage(request):
     return HttpResponse('Welcome to the Patient Monitoring System Back-End. This project was created for MMAN4020 Thesis B.')
 
+admin.site.site_header = "Covid Patient Vital Sign Monitoring System"
 
 urlpatterns = [
     path('admin/', admin.site.urls),
