@@ -9,6 +9,7 @@ class Patient(models.Model):
     height = models.FloatField()
     weight = models.FloatField()
     patient_description = models.TextField(blank=True)
+    unique_id = models.CharField(max_length=32, unique=True, null=True)
     registered_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,7 +31,6 @@ class VitalSigns(models.Model):
     
     class Meta:
         verbose_name_plural = "Vital Sign Readings (Per Device)"
-
 
     #CASCADE ALSO DELETES THE VITAL SIGNS ATTACHED TO THE DEVICE IF DEVICE GETS DELETED
     device = models.ForeignKey(Device, related_name='vitalsigns', null=True, on_delete=models.CASCADE)
