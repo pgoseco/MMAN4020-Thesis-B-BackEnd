@@ -20,6 +20,7 @@ class Device(models.Model):
     patient = models.ForeignKey(Patient, related_name='devices',
                              null=True, on_delete=models.SET_NULL)
     device_id = models.CharField(max_length=32, unique=True)
+    device_battery = models.IntegerField(default=0)
     registered_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

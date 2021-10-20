@@ -19,13 +19,18 @@ class PatientAdmin(admin.ModelAdmin):
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('device_id', 'get_patient_id', 'registered_at')
+    list_display = ('device_id', 'get_battery_percentage', 'get_patient_id', 'registered_at')
     list_filter = ('patient',)
 
     def get_patient_id(self, obj):
         return f"{obj.patient.unique_id}"
 
     get_patient_id.short_description = "Patient ID"
+
+    def get_battery_percentage(self, obj):
+        return f"{obj.device_battery}%"
+
+    get_battery_percentage.short_description = "Device Battery Level"
 
 @admin.register(VitalSigns)
 class VitalSignsAdmin(admin.ModelAdmin):
