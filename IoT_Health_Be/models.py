@@ -39,7 +39,7 @@ class VitalSigns(models.Model):
     body_temperature = models.FloatField()
     pulse_rate = models.FloatField()
     respiration_rate = models.FloatField()
-    oxygen_saturation_level = models.CharField(max_length=32)
+    oxygen_saturation_level = models.FloatField()
     measured_at = models.DateTimeField(auto_now_add=True)
 
     def __bool__(self):

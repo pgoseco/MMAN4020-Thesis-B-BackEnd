@@ -19,11 +19,11 @@ class PatientAdmin(admin.ModelAdmin):
 
 @admin.register(Device)
 class DeviceAdmin(admin.ModelAdmin):
-    list_display = ('device_id', 'get_battery_percentage', 'get_patient_id', 'registered_at')
+    list_display = ('device_id', 'get_battery_percentage', 'get_patient_id', 'registered_at', 'updated_at',)
     list_filter = ('patient',)
 
     def get_patient_id(self, obj):
-        return f"{obj.patient.unique_id}"
+        return f"{obj.patient.name}-{obj.patient.unique_id}"
 
     get_patient_id.short_description = "Patient ID"
 
@@ -34,15 +34,22 @@ class DeviceAdmin(admin.ModelAdmin):
 
 @admin.register(VitalSigns)
 class VitalSignsAdmin(admin.ModelAdmin):
-    list_display = ('get_device_id', 'oxygen_saturation_level', 'body_temperature', 'pulse_rate',
+    list_display = ('get_device_id', 'osa_units', 'body_temperature', 'pulse_rate',
                     'respiration_rate', 'covid_symptoms', 'measured_at',)
     list_filter = ('device',)
 
     def get_device_id(self, obj):
         return f"{obj.device.device_id}"
 
-    get_device_id.short_description = "Device ID"
+    def osa_units(self, obj):
+        return obj.oxygen_saturation_level
 
+    def bt_units(self, obj):
+        return obj.body_temperature
+    
+    get_device_id.short_description = "Device ID"
+    osa_units.short_description = "Oxygen Saturation Level (SpO2 %)"
+    bt_units.short_description = "Oxygen Saturation Level (SpO2 %)"
 
 admin.site.unregister(Group)
 
