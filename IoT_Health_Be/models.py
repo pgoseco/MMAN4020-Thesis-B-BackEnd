@@ -42,6 +42,15 @@ class VitalSigns(models.Model):
     oxygen_saturation_level = models.FloatField()
     measured_at = models.DateTimeField(auto_now_add=True)
 
+    # ADD LOGIC HERE FOR COVID VITAL SIGNS
+    def save(self, *args, **kwargs):
+        if self.oxygen_saturation_level == 0.0:
+            self.covid_symptoms = True
+            super(VitalSigns, self).save(*args, **kwargs)
+        else:
+            self.covid_symptoms = False
+            super(VitalSigns, self).save(*args, **kwargs)
+
     def __bool__(self):
         return self.covid_symptoms
 
