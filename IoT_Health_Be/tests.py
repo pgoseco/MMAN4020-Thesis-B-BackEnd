@@ -37,8 +37,7 @@ class VitalSignTests(TestCase):
                                 unique_id='zxc13zv',)
 
     #Read JSON Payload and Validate - FR1.1.1 & FR1.1.2
-    '''
-    
+
     def test_first_name_label(self):
         vitalsigns = VitalSigns.objects.get(id=1)
         field_label_body_temp = vitalsigns._meta.get_field('body_temperature').verbose_name #checks whether the values of the field labels and the size of it is as expected
@@ -49,40 +48,40 @@ class VitalSignTests(TestCase):
         self.assertEqual(field_label_pulse_rate, 'pulse rate')
         self.assertEqual(field_label_respiration_rate, 'respiration rate')
         self.assertEqual(field_label_oxygen, 'oxygen saturation level')
-    '''
+    
     #Append/Write JSON Payload and confirm - FR1.2.1 & FR1.2.2
-    '''
+    
     def test_write_and_confirm(self):
         NewPatient =  self.create_new_patient()
         self.assertTrue(isinstance(NewPatient, Patient))
-    '''
+    
 
     #Determine COVID Symptoms - FR1.2.3
-    '''
+    
     def test_covid_symptoms(self):
         vitalsigns = VitalSigns.objects.get(id=1)
         self.assertEqual(vitalsigns.covid_symptoms, True)
-    '''
+    
 
     #Update Data - FR1.2.4
-    '''
+    
     def test_update_data(self):
         patient = Patient.objects.get(id=1)
         print(patient.name)
         patient.name = "Franz"
         print(patient.name)
         self.assertEqual(patient.name, 'Franz')
-    '''
+    
 
     #Delete Data  - FR1.2.5
-    '''
+    
     def test_delete_data(self):
         patient = Patient.objects.get(id=1)
         print(patient.name)
         Patient.objects.filter(id=1).delete()
         patient = Patient.objects.get(id=1)
         self.assertEqual(patient.name, 'Patrick')
-    '''
+    
 
 class ModelAdminTest(TestCase):
     @classmethod
@@ -105,14 +104,14 @@ class ModelAdminTest(TestCase):
         self.assertEqual(str(ma), 'IoT_Health_Be.ModelAdmin')
 
     #Display Data - FR1.3.1
-    '''
+    
     def test_default_fields(self):
         ma = ModelAdmin(Patient, self.site)
         self.assertEqual(list(ma.get_form(request).base_fields), ['name', 'last_name', 'covid_positive', 'height', 'weight', 'patient_description', 'unique_id'])
         self.assertEqual(list(ma.get_fields(request)), ['name', 'last_name', 'covid_positive', 'height', 'weight', 'patient_description', 'unique_id'])
         self.assertEqual(list(ma.get_fields(request, self.patient)), ['name', 'last_name', 'covid_positive', 'height', 'weight', 'patient_description', 'unique_id'])
         self.assertIsNone(ma.get_exclude(request, self.patient))
-    '''
+    
     #Filter/Sort Data - FR1.3.2
     def test_filter_data(self):
         ma = ModelAdmin(Patient, self.site)
