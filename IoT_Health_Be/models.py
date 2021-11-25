@@ -44,7 +44,7 @@ class VitalSigns(models.Model):
 
     # ADD LOGIC HERE FOR COVID VITAL SIGNS
     def save(self, *args, **kwargs):
-        if self.oxygen_saturation_level == 0.0:
+        if self.oxygen_saturation_level <= 94.0:
             self.covid_symptoms = True
             super(VitalSigns, self).save(*args, **kwargs)
         else:
@@ -53,5 +53,3 @@ class VitalSigns(models.Model):
 
     def __bool__(self):
         return self.covid_symptoms
-
-
